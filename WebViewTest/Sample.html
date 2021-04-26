@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+
+<html lang="kr">
+<head>
+    <meta charset="utf-8" />
+    <title>Sample Binding</title>
+</head>
+<body>
+    <input type="button" value="Call" onclick="sample_click();" />
+    <input type="button" value="Refresh" onclick="location.reload();" />
+    <script type="text/javascript">
+        function sample_click() {
+            // chrome.webview.hostObjects에서 C# object를 확인
+            // hostObj = C# 코드에서 바인딩한 object
+            // ShowMessageBox = C# 코드에서 바인딩한 object(HtmlInterop)의 함수명
+            chrome.webview.hostObjects.hostObj.ShowMessageBox("Sample button clicked!");
+        }
+    </script>
+</body>
+</html>

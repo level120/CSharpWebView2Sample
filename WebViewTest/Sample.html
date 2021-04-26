@@ -6,8 +6,12 @@
     <title>Sample Binding</title>
 </head>
 <body>
+    <!-- hostObj 확인용 버튼 -->
     <input type="button" value="Call" onclick="sample_click();" />
+
+    <!-- 새로고침을 할 때도 NavigationCompleted가 동작하는 지 확인용 버튼 -->
     <input type="button" value="Refresh" onclick="location.reload();" />
+
     <script type="text/javascript">
         function sample_click() {
             // chrome.webview.hostObjects에서 C# object를 확인

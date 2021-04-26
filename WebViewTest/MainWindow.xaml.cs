@@ -16,10 +16,12 @@ namespace WebViewTest
         {
             InitializeComponent();
 
-            // html 위치를 찾아 등록하는 것으로, 경로가 이미 있다면 Skip
+            // html 위치를 찾는 것으로, 경로를 이미 알고 있다면 Skip
             var executionPath = Assembly.GetExecutingAssembly().Location.AsSpan();
             var solutionPath = Path.GetDirectoryName(executionPath);
             var sampleHtmlPath = Path.Combine(solutionPath.ToString(), "Sample.html");
+
+            // html 위치 등록(https://sample 또는 C:\Sample.html)
             WebView2.Source = new Uri(sampleHtmlPath);
 
             // WebView가 Navigation이 끝낼 때의 작업 등록
@@ -28,19 +30,12 @@ namespace WebViewTest
 
         private void WhenNavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
         {
-            if (!(sender is WebView2 webView2 && e.IsSuccess))
+            if (sender is not WebView2 webView2 || !e.IsSuccess)
                 return;
 
-            try
-            {
-                //
-                var hostObj = new HtmlInterop();
-                webView2.CoreWebView2.AddHostObjectToScript("hostObj", hostObj);
-            }
-            catch
-            {
-                // ignored
-            }
+            // WebView2의 HostObject로 hostObj 등록
+            var hostObj = new HtmlInterop();
+            webView2.CoreWebView2.AddHostObjectToScript("hostObj", hostObj);
         }
     }
 }
